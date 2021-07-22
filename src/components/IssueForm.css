@@ -1,4 +1,9 @@
 .conatiner {
     display: flex;
+    flex-direction: column;
+}
+
+.issue_info {
+    display: flex;
     justify-content: space-around;
 }
