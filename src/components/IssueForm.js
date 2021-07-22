@@ -51,7 +51,10 @@ const IssueForm = () => {
             Description: description,
         };
         firestore.push(data);
-        console.log(firestore);
+        // console.log(firestore);
+        setprojectName('');
+        setTitle('');
+        setDescription('');
     };
 
     return (
