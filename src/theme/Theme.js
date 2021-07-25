@@ -1,7 +1,7 @@
 import { createTheme } from "@material-ui/core";
 
-const primary = "#2ecc71";
-const secondary = "#8e44ad";
+const primary = "#fff";
+const secondary = "#9c88ff";
 
 export default createTheme({
     typography: {
@@ -45,5 +45,11 @@ export default createTheme({
                 padding: "0px 0 0 10px",
             },
         },
+        MuiCircularProgress: {
+            root: {
+                color: secondary,
+                fontSize: '40px',
+            }
+        }
     },
 });
