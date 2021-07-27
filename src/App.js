@@ -22,12 +22,14 @@ function App() {
       for (let id in data) {
         issueInfo.push({
           id: id,
+          ProjectNumber: data[id].ProjectNumber,
           ProjectName: data[id].ProjectName,
           Title: data[id].Title,
           Description: data[id].Description,
         });
       }
       setIssueData(issueInfo);
+      // console.log(issueData);
       setLoading(false);
     })
   }, []);
@@ -51,7 +53,7 @@ function App() {
             {
               loading ? (
                 <Box display='flex' justifyContent='center' mt={20}>
-                  <CircularProgress color='secondary.main' size={40} />
+                  <CircularProgress color='secondary' size={40} />
                 </Box>
               ) : (
                   <>

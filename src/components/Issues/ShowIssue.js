@@ -8,7 +8,6 @@ import {
     Dialog,
     DialogTitle,
     DialogContent,
-    DialogContentText,
     DialogActions,
     FilledInput,
     IconButton,
@@ -16,6 +15,8 @@ import {
 } from "@material-ui/core";
 import { Close } from '@material-ui/icons';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import ErrorIcon from '@material-ui/icons/Error';
 
 
 
@@ -42,6 +43,7 @@ const useStyle = makeStyles((theme) => ({
 const ShowIssue = (props) => {
     // console.log(props);
     const classes = useStyle();
+    const [updateProjectNumber, setUpdateProjectNumber] = useState('');
     const [updateProjectName, setUpdateProjectName] = useState('');
     const [updateTitle, setUpdateTitle] = useState('');
     const [updateDescription, setUpdateDescription] = useState('');
@@ -51,6 +53,7 @@ const ShowIssue = (props) => {
 
     const handleEdit = () => {
         setOpenUpdateIssue(!openUpdateIssue);
+        setUpdateProjectNumber(props.ProjectNumber);
         setUpdateProjectName(props.ProjectName);
         setUpdateTitle(props.Title);
         setUpdateDescription(props.Description);
@@ -77,6 +80,7 @@ const ShowIssue = (props) => {
     const handleUpdateIssue = () => {
         const firestore = firebase.database().ref('/IssueInfo').child(issueId);
         firestore.update({
+            ProjectNumber: updateProjectNumber,
             ProjectName: updateProjectName,
             Title: updateTitle,
             Description: updateDescription,
@@ -96,6 +100,9 @@ const ShowIssue = (props) => {
             <Box p={2} className={classes.wrapper}>
                 <Grid container alignItems='center'>
                     <Grid item xs>
+                        <Typography variant='subtitle1'>{props.ProjectNumber}</Typography>
+                    </Grid>
+                    <Grid item xs>
                         <Typography variant='subtitle1'>{props.ProjectName}</Typography>
                     </Grid>
                     <Grid item xs>
@@ -111,6 +118,7 @@ const ShowIssue = (props) => {
                                     onClick={handleEdit} 
                                     variant='outlined' 
                                     style={{ 'marginRight': '10px', 'color': '#4caf50', 'borderColor': '#4caf50' }} 
+                                    startIcon={<EditIcon />}
                                     >
                                     Edit
                                     </Button>
@@ -141,6 +149,16 @@ const ShowIssue = (props) => {
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
                             <FilledInput
+                                onChange={(e) => setUpdateProjectNumber(e.target.value)}
+                                name='updateProjectNumber'
+                                value={updateProjectNumber}
+                                autoComplete='off'
+                                disableUnderline
+                                fullWidth
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <FilledInput
                                 onChange={(e) => setUpdateProjectName(e.target.value)}
                                 name='updateProjectName'
                                 value={updateProjectName}
@@ -149,7 +167,7 @@ const ShowIssue = (props) => {
                                 fullWidth
                             />
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={12}>
                             <FilledInput
                                 onChange={(e) => setUpdateTitle(e.target.value)}
                                 name='updateTitle'
@@ -186,16 +204,9 @@ const ShowIssue = (props) => {
             <Dialog open={openDeleteIssue}>
                 <DialogTitle>
                     <Box display='flex' justifyContent='space-between' alignItems='center'>
-                        <IconButton onClick={closeDeleteModal} >
-                            <Close />
-                        </IconButton>
+                        <ErrorIcon style={{ 'color': '#e57373', 'marginRight': '10px'}} /> Are you sure?
                     </Box>
                 </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Are you sure?
-                    </DialogContentText>
-                </DialogContent>
                 <DialogActions>
                     <Button autoFocus onClick={closeDeleteModal}>
                         Cancel

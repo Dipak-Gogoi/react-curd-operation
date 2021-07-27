@@ -18,6 +18,7 @@ import { Close } from '@material-ui/icons';
 
 
 const initState = {
+    number: '',
     projectName: '',
     title: '',
     description: '',
@@ -48,13 +49,15 @@ const IssueForm = (props) => {
         }
         setLoading(true);
         const firestore = firebase.database().ref('/IssueInfo');
+        // const postedOn = firestore.FieldValue.serverTimestamp();
         let data = {
+            ProjectNumber: isssueDetails.number,
             ProjectName: isssueDetails.projectName,
             Title: isssueDetails.title,
             Description: isssueDetails.description,
         };
         firestore.push(data);
-        // console.log(firestore);
+        // console.log(data);
         closeModal();
 
     };
@@ -80,6 +83,17 @@ const IssueForm = (props) => {
                     <Grid item xs={6}>
                         <FilledInput
                             onChange={handleChange}
+                            name='number'
+                            value={isssueDetails.number}
+                            autoComplete='off'
+                            placeholder='Project No. *'
+                            disableUnderline
+                            fullWidth
+                        />
+                    </Grid>
+                    <Grid item xs={6}>
+                        <FilledInput
+                            onChange={handleChange}
                             name='projectName'
                             value={isssueDetails.projectName}
                             autoComplete='off'
@@ -88,7 +102,7 @@ const IssueForm = (props) => {
                             fullWidth
                         />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                         <FilledInput
                             onChange={handleChange}
                             name='title'
